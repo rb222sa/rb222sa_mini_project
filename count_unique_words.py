@@ -1,7 +1,7 @@
 import os
 
-brian = os.getcwd() + "/life_of_brian.txt"
-news = os.getcwd() + "/swe_news.txt"
+brian = os.getcwd() + "/data/life_of_brian.txt"
+news = os.getcwd() + "/data/swe_news.txt"
 alphabet = "abcdefghijklmnopqrstuvwxyz'-"
 special = "\n"
 
