@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
 import time
-import math
+import numpy
 from random import uniform
 
 
@@ -54,11 +54,13 @@ ax.set_yticks(range(0, rows+1, 1))
 ax.set_xticks(range(0, cols+1, 1))
 plt.title(f"Colored grid of size {rows}x{cols}")
 
-angle = 2*math.pi
-pos_x = 0.0
-pos_y = 0.0
-v_x = 0.3
-v_y = 0.3
+
+x = 0.0
+y = 0.0
+velocity = 0.3
+dir_x = 0
+dir_y = 0
+
 start = time.time()
 previous_time = start
 print(rows, cols)
@@ -66,36 +68,34 @@ print(rows, cols)
 
 #   Compute new position by using given equation in assignment pdf,
 #   "x^i+1 = x^i + vx∆t" 
-def update_pos(current_time, pos_x, pos_y, v_x, v_y):
+def update_pos(current_time, x, y, dir_x, dir_y):
     global previous_time
     elapsed_time = current_time - previous_time
-    new_x = pos_x + (v_x * (elapsed_time))     
-    new_y = pos_y + (v_y * (elapsed_time))
+    new_x = x + (dir_x * (elapsed_time))     
+    new_y = y + (dir_y * (elapsed_time))
     previous_time = current_time
     return new_x, new_y
 
 
-def check_collision(pos_x, pos_y, v_x, v_y):
-    if int(pos_x) >= 5:
-        v_x = math.cos(uniform(0.0,-1.0))
-        v_y = math.sin(uniform(0.0, 1.0))
-    if int(pos_x) < 0:
-        v_x = math.cos(uniform(0.0, 1.0))
-        v_y = math.sin(uniform(0.0, 1.0))
-    if int(pos_y) > 4:
-        v_x = math.cos(uniform(0.0, 1.0))
-        v_y = math.sin(uniform(0.0, -1.0))
-    if int(pos_y) < 0:
-        v_x = math.cos(uniform(0.0, 1.0))
-        v_y = math.sin(uniform(0.0, 1.0))
-    return v_x, v_y
+def check_collision(x, y):
+    if y == rows or y < 0:
+        return True
+    elif x == cols or x < 0:
+        return True
+    return False
+
+
+def change_direction(dir_x, dir_y)
+    angle = numpy.random.uniform(0, 2*numpy.pi)
+    
+
 
 
 # Starting the lawnmower
 for i in range(0, 20):
-    pos_x, pos_y = update_pos(time.time(), pos_x, pos_y, v_x, v_y)
-    v_x, v_y = check_collision(pos_x, pos_y, v_x, v_y)
-    print(f"x: {pos_x}\t y:{pos_y}")
+    x, y = update_pos(time.time(), x, y, dir_x, dir_y)
+    check_collision(x, y)
+    print(f"x: {x}\t y:{y}")
     time.sleep(1)
 
 
